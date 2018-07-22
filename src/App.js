@@ -1,15 +1,35 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import "./App.css";
-import {hot} from "react-hot-loader";
+import { hot } from "react-hot-loader";
 
-class App extends Component{
-  render(){
-    return(
-      <div className="App">
-        <h1> Hello, World! </h1>
-      </div>
-    );
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
   }
-}
+});
 
-export default App;
+const App = (props) => {
+  const { classes } = props;
+  return (
+    <div className="App">
+      <TextField
+        id="name"
+        label="Name"
+        className={classes.textField}
+        value={props.value}
+        margin="normal"
+      />
+
+      <Button variant="contained" color="primary">
+        Hello, World!
+      </Button>
+    </div>
+  );
+}
+export default withStyles(styles)(App);

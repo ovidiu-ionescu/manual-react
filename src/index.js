@@ -15,7 +15,7 @@ const fetchMemo = (id) => ({type: 'FETCH_MEMO', 'id': id });
 
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(memoReducer, {}, composeWithDevTools(applyMiddleware(sagaMiddleware)));
+const store = createStore(memoReducer, {aha: 'aha'}, composeWithDevTools(applyMiddleware(sagaMiddleware)));
 
 sagaMiddleware.run(rootSaga);
 

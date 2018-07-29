@@ -15,7 +15,7 @@ function* watchFetchMemoList() {
       const { data } = yield call(api.fetchMemoList);
       yield put({
         type: actionTypes.FETCH_MEMO_LIST_SUCCEEDED,
-        payload: { tasks: data },
+        payload: { data },
         });
     } catch(e) {
       yield put({

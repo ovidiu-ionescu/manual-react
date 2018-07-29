@@ -14,22 +14,31 @@ const styles = theme => ({
   }
 });
 
-const App = (props) => {
-  const { classes } = props;
-  return (
-    <div className="App">
-      <TextField
-        id="name"
-        label="Name"
-        className={classes.textField}
-        value={props.value}
-        margin="normal"
-      />
+class App extends Component {
 
-      <Button variant="contained" color="primary">
-        Hello, World!
-      </Button>
-    </div>
-  );
+  componentDidMount() {
+    const { fetchMemoList } = this.props;
+    fetchMemoList();  
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className="App">
+        <TextField
+          id="name"
+          label="Name"
+          className={classes.textField}
+          value={this.props.value}
+          margin="normal"
+        />
+
+        <Button variant="contained" color="primary">
+          Hello, World!
+        </Button>
+      </div>
+    );
+  }
 }
+
 export default withStyles(styles)(App);

@@ -6,6 +6,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
   root: {
@@ -17,19 +18,28 @@ const styles = theme => ({
   },
 });
 
-function MemoEntry(props) {
-  const { classes, memo, fetchMemo } = props;
-  const change = (event, expanded) => {
-    fetchMemo(memo.id);
-  }
+function MemoBody(props) {
+  const { classes, content } = props;
   return (
-    <ExpansionPanel key={'memo_' + memo.id} onChange={change} >
+    <TextField multiline="true" value={content}/>
+  )
+}
+
+function MemoEntry(props) {
+  const { classes, memoTitle, fetchMemo, memo } = props;
+  const change = (event, expanded) => {
+    !memo && fetchMemo(memoTitle.id);
+  }
+  const content = memo && memo.memotext || "Loading..."
+
+  return (
+    <ExpansionPanel key={'memo_' + memoTitle.id} onChange={change} >
     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-      <Typography className={classes.heading}>{memo.title}</Typography>
+      <Typography className={classes.heading}>{memoTitle.title}</Typography>
     </ExpansionPanelSummary>
     <ExpansionPanelDetails>
       <Typography>
-        Loading...
+        {MemoBody({classes, content})}
       </Typography>
     </ExpansionPanelDetails>
   </ExpansionPanel>
@@ -45,10 +55,10 @@ class MemoList extends Component {
   }
   render() {
     const { classes, state, fetchMemo } = this.props;
-    const memos = state.memoList || [];
+    const memoList = state.memoList || [];
     return (
       <div className={classes.root}>
-      {memos.map((memo)=> MemoEntry({classes, memo, fetchMemo}))}
+      {memoList.map((memoTitle)=> MemoEntry({classes, memoTitle, fetchMemo, memo: state.memos[memoTitle.id]}))}
       </div>
     );
   }

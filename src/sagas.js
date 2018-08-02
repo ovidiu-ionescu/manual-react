@@ -24,7 +24,19 @@ function* watchFetchMemoList() {
 
 function* workerFetchMemo(action) {
   console.log(`Fetch memo ${action.id}`);
-  console.log({action});
+  try {
+    const { data } = yield call(api.fetchMemo, action.id);
+    yield put({
+      type: actionTypes.FETCH_MEMO_SUCCEEDED,
+      payload: { data }
+    });
+
+  } catch(e) {
+    yield put({
+      type: actionTypes.FETCH_MEMO_FAILED,
+      payload: { error: e.message }
+    });
+  }
 }
 
 function* watchFetchMemo() {
